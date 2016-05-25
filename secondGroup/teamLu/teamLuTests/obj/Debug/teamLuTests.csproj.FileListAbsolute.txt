@@ -1,9 +1,0 @@
-D:\Documents\Visual Studio 2015\Projects\teamLu\teamLuTests\obj\Debug\teamLuTests.csprojResolveAssemblyReference.cache
-D:\Documents\Visual Studio 2015\Projects\teamLu\teamLuTests\bin\Debug\teamLuTests.dll
-D:\Documents\Visual Studio 2015\Projects\teamLu\teamLuTests\bin\Debug\teamLuTests.pdb
-D:\Documents\Visual Studio 2015\Projects\teamLu\teamLuTests\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
-D:\Documents\Visual Studio 2015\Projects\teamLu\teamLuTests\bin\Debug\teamLu.exe
-D:\Documents\Visual Studio 2015\Projects\teamLu\teamLuTests\bin\Debug\teamLu.pdb
-D:\Documents\Visual Studio 2015\Projects\teamLu\teamLuTests\bin\Debug\zh-Hans\Microsoft.VisualStudio.QualityTools.UnitTestFramework.resources.dll
-D:\Documents\Visual Studio 2015\Projects\teamLu\teamLuTests\obj\Debug\teamLuTests.dll
-D:\Documents\Visual Studio 2015\Projects\teamLu\teamLuTests\obj\Debug\teamLuTests.pdb
