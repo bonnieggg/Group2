@@ -1,0 +1,4 @@
+D:\Documents\Visual Studio 2015\Projects\teamLu\SecondGroupClass\bin\Debug\SecondGroupClass.dll
+D:\Documents\Visual Studio 2015\Projects\teamLu\SecondGroupClass\bin\Debug\SecondGroupClass.pdb
+D:\Documents\Visual Studio 2015\Projects\teamLu\SecondGroupClass\obj\Debug\SecondGroupClass.dll
+D:\Documents\Visual Studio 2015\Projects\teamLu\SecondGroupClass\obj\Debug\SecondGroupClass.pdb

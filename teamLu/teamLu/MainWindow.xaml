@@ -1,0 +1,273 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:teamLu"
+        xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit" x:Class="teamLu.MainWindow"
+        mc:Ignorable="d"
+        Title="招财喵" Height="600" Width="805" WindowStartupLocation="CenterScreen" Background="#FFE5E5E5" Loaded="Window_Loaded">
+    <Grid>
+        <TabControl x:Name="tabControl" Margin="5,15,15,15" TabStripPlacement="Left">
+            <TabItem Header="产品" FontSize="16" >
+                <Grid>
+                    <Grid  x:Name="productGrid">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <Grid Margin="50,30,50,10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Margin="10,0" x:Name="userName"/>
+                            <TextBlock Grid.Column="1" Margin="10,0,5,0" Text="你好 欢迎来到招财喵理财软件"/>
+                        </Grid>
+                        <Grid Grid.Row="2" Margin="50,10,100,10">
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="期限" Padding="5"/>
+                            <Grid Grid.Column="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox VerticalAlignment="Center" Padding="3" MinWidth="50" x:Name="minDate"/>
+                                <TextBlock Grid.Column="1" Padding="5" HorizontalAlignment="Right" Width="18"><Run Text="-"/></TextBlock>
+                                <TextBox Grid.Column="2" Padding="3" VerticalAlignment="Center" MinWidth="50" x:Name="maxDate"/>
+                                <TextBlock Grid.Column="3" Text="个月" Padding="5"/>
+                            </Grid>
+                            <TextBlock Grid.Row="1" Text="投资方式" Padding="5" MinWidth="50"/>
+                            <ComboBox Grid.Row="1" Grid.Column="1" Padding="5" VerticalAlignment="Center" x:Name="modeCombo" SelectionChanged="SelectionChange">
+                                <ComboBoxItem IsSelected="True" Content="全部"/>
+                                <ComboBoxItem Content="一口价"/>
+                                <ComboBoxItem Content="竞拍"/>
+                            </ComboBox>
+
+                            <TextBlock Grid.Column="2" Text="利率" Padding="5" Margin="20,0,0,0"/>
+                            <Grid Grid.Column="3">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox Padding="3" VerticalAlignment="Center" MinWidth="50" x:Name="minRate"/>
+                                <TextBlock Padding="5" Grid.Column="1"><Run Text="-"/></TextBlock>
+                                <TextBox Padding="3" VerticalAlignment="Center" MinWidth="50" Grid.Column="2" x:Name="maxRate"/>
+                            </Grid>
+
+                            <TextBlock Grid.Row="1" Grid.Column="2" Text="资金" Padding="5" Margin="20,0,0,0"/>
+                            <Grid Grid.Column="3" Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox Padding="3" VerticalAlignment="Center" MinWidth="50" x:Name="minMoney"/>
+                                <TextBlock Padding="5" Grid.Column="1"><Run Text="-"/></TextBlock>
+                                <TextBox Padding="3" VerticalAlignment="Center" MinWidth="50" Grid.Column="2" x:Name="maxMoney"/>
+                                <TextBlock Text="万元" Padding="5" Grid.Column="3"/>
+                            </Grid>
+
+                            <ComboBox Grid.Column="4" Padding="5" Margin="20,0,0,5" x:Name="sortCombo" SelectionChanged="SelectionChange">
+                                <ComboBoxItem Content="从高到低" IsSelected="True"/>
+                                <ComboBoxItem Content="从低到高"/>
+                            </ComboBox>
+                            <Button Grid.Row="1" Grid.Column="4" Padding="5" Content="筛选" Margin="20,0,0,0" Click="SelectCondition"/>
+                        </Grid>
+                        <Grid Grid.Row="3" Margin="20">
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <ScrollViewer x:Name="scroller">
+                                <ListView x:Name="lstView" Padding="10"/>
+                            </ScrollViewer>
+                            <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Button Content="上一页" Margin="5" x:Name="preBtn" Click="PrePage"/>
+                                <Button Content="下一页" Margin="5" x:Name="nextBtn" Click="NextPage"/>
+                                <TextBlock x:Name="pageTip" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+
+                    <Grid Visibility="Hidden" x:Name="detailGrid">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Orientation="Horizontal">
+                            <Button Content="后退" HorizontalAlignment="Left" Padding="3" Margin="5" Click="BackClicked"/>
+                        </StackPanel>
+                        <WebBrowser Grid.Row="1" x:Name="webDetail"/>
+                    </Grid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="统计" FontSize="16">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="1" Margin="50,30,60,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="统计我的投资收益" FontSize="20" Margin="5"/>
+                                <Button Grid.Column="1" Margin="5" Click="Setting">个人设置</Button>
+                                <TextBlock Grid.Column="2" VerticalAlignment="Center" Margin="50,0,0,0" Name="accountTxt">当前账户余额:</TextBlock>
+                            </Grid>
+                            <TextBlock Text="投资记录" Grid.Row="1" Margin="5"/>
+                            <DataGrid Grid.Row="2" x:Name="recordsLst" AutoGenerateColumns="False" SelectionChanged="SelectionChanged">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="投资项目" Binding="{Binding ProductName}"/>
+                                    <DataGridTextColumn Header="投资金额" Binding="{Binding InvertAmount}"/>
+                                    <DataGridTextColumn Header="投资日期" Binding="{Binding InvertDate}"/>
+                                    <DataGridTextColumn Header="收益" Binding="{Binding Profit}"/>
+                                    <DataGridTextColumn Header="状态" Binding="{Binding Status}"/>
+                                    <DataGridTextColumn Header="赎回时间" Binding="{Binding BackDate}"></DataGridTextColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+                        <Grid Grid.Column="1" Margin="10,40">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <Button Content="导入数据" Margin="5" Click="ImportData" VerticalAlignment="Center" Padding="3"/>
+                            <Button Content="赎回" Grid.Row="1" Margin="5" VerticalAlignment="Center" Padding="3" Click="MakeBack" IsEnabled="False" Name="backBtn"/>
+                            <Button Content="导出数据" Grid.Row="2" Margin="5" VerticalAlignment="Center" Padding="3" Click="ExportData" IsEnabled="False" Name="exportBtn"/>
+                            <Button Content="统计" Grid.Row="3" Margin="5" VerticalAlignment="Center" Padding="3" Click="StatisticsClick" IsEnabled="False" Name="staBtn"/>
+                        </Grid>
+                    </Grid>
+                    <Grid Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <chartingToolkit:Chart Name="lineChart" Title="投资金额报表" Margin="50,10,20,20" Visibility="Hidden">
+                            <chartingToolkit:LineSeries DependentValuePath="Value"
+                                                        IndependentValuePath="Key" ItemsSource="{Binding}"></chartingToolkit:LineSeries>
+                        </chartingToolkit:Chart>
+                        <chartingToolkit:Chart Name="profitChart" Title="收益报表" Margin="10,10,20,20" Visibility="Hidden" Grid.Column="1">
+                            <chartingToolkit:LineSeries DependentValuePath="Value"
+                                                        IndependentValuePath="Key" ItemsSource="{Binding}"></chartingToolkit:LineSeries>
+                        </chartingToolkit:Chart>
+                        <chartingToolkit:Chart Name="profitRateChart" Title="收益率(%)报表" Margin="10,10,20,20" Visibility="Hidden" Grid.Column="2">
+                            <chartingToolkit:LineSeries DependentValuePath="Value"
+                                                        IndependentValuePath="Key" ItemsSource="{Binding}"></chartingToolkit:LineSeries>
+                        </chartingToolkit:Chart>
+                    </Grid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="抢购" FontSize="16">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid Margin="60,40,60,20">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="想要抢购的产品设置" FontSize="20"/>
+                        <Grid Grid.Row="1" Margin="0,20,40,0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="期限" VerticalAlignment="Center"/>
+                            <Grid Grid.Column="1">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBox MinWidth="50" Padding="3" x:Name="minD"/>
+                                    <TextBlock Padding="3"><Run Text="-"/></TextBlock>
+                                    <TextBox MinWidth="50" Padding="3" x:Name="maxD"/>
+                                    <TextBlock Padding="3" Text="个月"/>
+                                </StackPanel>
+                            </Grid>
+                            <TextBlock Text="利率" Grid.Column="2" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                            <Grid Grid.Column="3">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBox MinWidth="50" Padding="3" x:Name="minR"/>
+                                    <TextBlock Padding="3"><Run Text="-"/></TextBlock>
+                                    <TextBox MinWidth="50" Padding="3" x:Name="maxR"/>
+                                </StackPanel>
+                            </Grid>
+                            <TextBlock Text="投资方式" Grid.Row="1"  Margin="0,10,10,0" VerticalAlignment="Center"/>
+                            <ComboBox Grid.Row="1" Grid.Column="1" Padding="5" VerticalAlignment="Center" Margin="0,10,10,0" MinWidth="100" HorizontalAlignment="Left" x:Name="panicMode">
+                                <ComboBoxItem IsSelected="True" Content="全部"/>
+                                <ComboBoxItem Content="一口价"/>
+                                <ComboBoxItem Content="竞拍"/>
+                            </ComboBox>
+                            <TextBlock Text="资金" Grid.Row="1" Grid.Column="2" Margin="10,10,10,0" VerticalAlignment="Center"/>
+                            <Grid Grid.Row="1" Grid.Column="3" Margin="0,10,10,0">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBox MinWidth="50" Padding="3" VerticalAlignment="Center" x:Name="minM"/>
+                                    <TextBlock Padding="3"><Run Text="-"/></TextBlock>
+                                    <TextBox MinWidth="50" Padding="3" VerticalAlignment="Center" x:Name="maxM"/>
+                                    <TextBlock Padding="3" Text="万元" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Grid>
+                            <Button Grid.Row="1" Grid.Column="4" Content="开始抢购" Margin="10,10,10,0" Click="PanicBuying" x:Name="panicBtn"/>
+                            <Button Grid.Row="1" Grid.Column="5" Content="取消" Margin="0,10,0,0" IsEnabled="False" x:Name="cancelBtn" Click="CancelPanic"/>
+                        </Grid>
+                    </Grid>
+
+                    <Grid Grid.Row="1" Margin="20,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <ScrollViewer>
+                            <ListView Padding="10" x:Name="panicLst"/>
+                        </ScrollViewer>
+                    </Grid>
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+    </Grid>
+
+</Window>

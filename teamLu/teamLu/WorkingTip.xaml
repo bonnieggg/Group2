@@ -1,0 +1,12 @@
+﻿<Window x:Class="teamLu.WorkingTip"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:teamLu"
+        mc:Ignorable="d"
+        Title="提示" Height="100" Width="300" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">正在拉取数据，请稍等...</TextBlock>
+    </Grid>
+</Window>
